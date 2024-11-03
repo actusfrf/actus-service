@@ -1,0 +1,90 @@
+.fullwidth {
+    margin: 0;
+    padding: 0;
+}
+
+.results-wrapper {
+    background: #ccc;
+    color: #000;
+}
+
+.results-group-header {
+    margin-bottom: 1rem;
+}
+
+.results-main-wrapper {
+    font-weight: bold;
+    border: 1px solid #ccc;
+    padding: 1rem 2rem;
+    min-height: 35px;
+    line-height: 35px;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    background: #002d56;
+}
+
+.results-main-wrapper .results-title {
+    font-weight: bold;
+}
+
+.results-main-wrapper .results-title .contract-id {
+    color: #fff;
+}
+
+.results-main-wrapper .results-description {
+    font-weight: normal;
+    color: #fff;
+    padding-left: 1rem;
+}
+
+.inactive input {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.table-header-container {
+    background: #002d56;
+    color: #fff;
+}
+
+.results-table-wrapper {
+    border-bottom: 1px solid #ccc;
+}
+
+.table-header {
+    padding: 1rem 0;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-bottom: none;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1.25rem;
+}
+
+.table-header:first-child {
+    border-left: 1px solid #ccc;
+}
+
+.cell-content {
+    padding: 1rem 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-bottom: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cell-content:first-child {
+    border-left: 1px solid #ccc;
+}
+
+.back-to-form {
+    padding: 1rem;
+    text-align: center;
+}

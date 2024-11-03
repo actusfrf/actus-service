@@ -1,0 +1,44 @@
+.demo-items-wrapper {
+    padding: 0;
+}
+
+.demo-text {
+    font-size: 1.4rem;
+    min-height: 125px;
+}
+
+.demo-col {
+    margin: 0;
+    padding: 0;
+}
+
+.demo-row {
+    padding: 1rem;
+}
+
+.demo-item {
+    padding: 1rem;
+}
+
+.demo-case-title {
+    cursor: pointer;
+    color: #015289;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.demo-item-content {
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    background: #d0d1d3;
+}
+@media screen and (min-width:641px) {
+    .demo-item-content article {
+        min-height: 140px;
+    }
+}
+@media screen and (max-width:640px) {
+    .demo-item-content article {
+        min-height: initial;
+    }
+}
