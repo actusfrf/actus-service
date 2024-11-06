@@ -1,10 +1,9 @@
 package org.actus.webapp.models;
 import org.actus.events.ContractEvent;
-import org.springframework.data.mongodb.core.mapping.Field;
+
 
 
 public class Event {
-	@Field
     String type;
     String time;
     double payoff;
