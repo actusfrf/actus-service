@@ -279,8 +279,8 @@ public class RiskFactor20Controller {
 	    	    		model.getAs("currency"),
 	    	    		new POF_PP_rf2(calloutData.getModelID()),
 	    	    		new STF_PP_rf2(calloutData.getModelID()),
-	    	    		model.getAs("BusinessDayConvention"),
-	    	  	        model.getAs("ContractID")
+	    	    		model.getAs("businessDayConvention"),
+	    	  	        model.getAs("contractID")
 	    	    		));    			
 	    	}
 	    	schedule.addAll(prepaymentEvents);
