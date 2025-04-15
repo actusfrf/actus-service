@@ -4,7 +4,7 @@ import java.util.List;
 
 public class EventStream {
 
-    private String contractId;
+    private String contractID;
     private String status;
     private String message;
     private List<Event> events;
@@ -12,19 +12,19 @@ public class EventStream {
     public EventStream() {
     }
 
-    public EventStream(String contractId, String status, String message, List<Event> events) {
-        this.contractId = contractId;
+    public EventStream(String contractID, String status, String message, List<Event> events) {
+        this.contractID = contractID;
         this.status = status;
         this.message = message;
         this.events = events;
     }
 
-    public String getContractId() {
-        return contractId;
+    public String getContractID() {
+        return contractID;
     }
 
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
+    public void setContractID(String contractID) {
+        this.contractID = contractID;
     }
 
     public String getStatus() {
@@ -54,7 +54,7 @@ public class EventStream {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("EventStream{");
-        sb.append("contractId='").append(contractId).append('\'');
+        sb.append("contractID='").append(contractID).append('\'');
         sb.append(", status='").append(status).append('\'');
         sb.append(", message='").append(message).append('\'');
         sb.append(", events='").append(events).append('\'');
