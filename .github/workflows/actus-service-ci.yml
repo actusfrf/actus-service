@@ -1,0 +1,56 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    tags:
+      - "v**"
+
+permissions:
+  contents: read
+
+jobs:
+  build-actus-service-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Checkout actus-core repository
+        uses: actions/checkout@v3
+        with:
+          repository:  ${{ github.repository_owner }}/actus-core
+          ref: ${{ github.ref_name }}
+          path: actus-core
+          fetch-depth: 1
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            actusfrf/actus-server-rf20:${{ github.ref_name }}
+            actusfrf/actus-server-rf20:latest
+          platforms: linux/amd64,linux/arm64
+
+  publish:
+    needs: [build-actus-service-images]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Docker image
+        run: echo "Docker image has been built and pushed successfully"
+      
