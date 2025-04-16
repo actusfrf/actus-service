@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-       
+
       - name: Checkout actus-core repository
         uses: actions/checkout@v3
         with:
@@ -43,8 +43,8 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ${{ vars.DOCKER_USERNAME }}/actus-service:${{ github.ref_name }}
-            ${{ vars.DOCKER_USERNAME }}/actus-service:latest
+            actusfrf/actus-server-rf20:${{ github.ref_name }}
+            actusfrf/actus-server-rf20:latest
           platforms: linux/amd64,linux/arm64
 
   publish:
