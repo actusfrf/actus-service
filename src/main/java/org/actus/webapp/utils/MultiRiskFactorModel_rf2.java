@@ -44,6 +44,7 @@ public class MultiRiskFactorModel_rf2 implements RiskFactorModelProvider{
 
 	public double stateAt(String id, LocalDateTime time, StateSpace states, ContractModelProvider terms, boolean isMarket) {
 		  // adding code to make this work for both market and behavior observations
+		  System.out.println("****fnp701 stateAt entered: time = " + String.valueOf(time) + " states.statusDate = " + String.valueOf(states.statusDate));
 		  double dval;
 	      if (isMarket) {
 	    	  RestTemplate restTemplate = new RestTemplate();
@@ -55,7 +56,7 @@ public class MultiRiskFactorModel_rf2 implements RiskFactorModelProvider{
 	    	  RestTemplate restTemplate = new RestTemplate();
 	    	  String uri = "http://"+ riskserviceHost+ ':' + riskservicePort + "/behaviorStateAt";
 	    	  // String uri = "http://localhost:8082/behaviorStateAt";
-	    	  BehaviorStateAtInput behaviorStateAtInput = new BehaviorStateAtInput(id, states);		  
+	    	  BehaviorStateAtInput behaviorStateAtInput = new BehaviorStateAtInput(id, time, states);		  
 	    	  dval = restTemplate.postForObject(uri, behaviorStateAtInput, Double.class );
 		  }
 		  return dval;
