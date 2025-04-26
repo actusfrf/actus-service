@@ -22,7 +22,7 @@ public final class POF_PP_rf2 implements PayOffFunction {
         		           BusinessDayAdjuster timeAdjuster) {
         	System.out.println("****fnp110 PayoffFunction POF_PP_rf2 entered");       // fnp diagnostic jan 2023   
         	return CommonUtils.settlementCurrencyFxRate(riskFactorModel, model, time, states)
-                * ContractRoleConvention.roleSign(model.getAs("ContractRole"))
+                * ContractRoleConvention.roleSign(model.getAs("contractRole"))
                 * riskFactorModel.stateAt(this.riskFactorID,time,states,model,false)
                 * states.notionalPrincipal;
         	}

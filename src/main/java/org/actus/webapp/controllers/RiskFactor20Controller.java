@@ -20,6 +20,8 @@ import org.actus.states.StateSpace;
 import org.actus.types.EventType;
 import org.actus.webapp.core.functions.POF_PP_rf2;
 import org.actus.webapp.core.functions.STF_PP_rf2;
+import org.actus.webapp.core.functions.POF_AFD_rf2;
+import org.actus.webapp.core.functions.STF_AFD_rf2;
 import org.actus.webapp.models.BatchInputData_rf2;
 import org.actus.webapp.models.BatchStartInput;
 import org.actus.webapp.models.CalloutData;
@@ -252,8 +254,8 @@ public class RiskFactor20Controller {
 	                ));
 	        }
 
-	        // call out to risk service /scenarioSimulationContractStart it will decide whether
-	        // any  prepayment behavior model is activated and return populated or empty List<CallOutData> 
+	        // call out to risk service /contractSimulationStart will decide whether
+	        // any behavior models are activated for this contract and return populated or empty List<CallOutData> 
 	        RestTemplate restTemplate = new RestTemplate(); 
 	        String uri = "http://"+ riskserviceHost+ ':' + riskservicePort + "/contractSimulationStart" ;
 	    	// String uri = "http://localhost:8082/contractSimulationStart";
@@ -264,26 +266,44 @@ public class RiskFactor20Controller {
 	    	for (Object item : items) {
 	    		System.out.println("****fnp102  returned  item= " + item.toString() + "item.class = " + item.getClass().toString()) ;
 	    		HashMap<String,String> fromItem = (HashMap<String,String>) item;
-	    		CalloutData calloutData = new CalloutData(fromItem.get("modelID"),fromItem.get("time"));
+	    		CalloutData calloutData = new CalloutData(fromItem.get("modelID"),fromItem.get("time"), 
+	    				fromItem.get("calloutType"));
 	    		ppcallouts.add(calloutData);
 	    	}
 	    	System.out.println("****fnp103  ppcallouts= " + ppcallouts.toString()) ;
 	    	
 	        // add any returned prepayment observations into the event schedule 
-	    	ArrayList<ContractEvent> prepaymentEvents = new ArrayList<ContractEvent>();
+	    	ArrayList<ContractEvent> calloutEvents = new ArrayList<ContractEvent>();
 	    	for (CalloutData calloutData : ppcallouts ) {
-	    		// set up a behavior observation / call out event for this model at this time 
-	    	    prepaymentEvents.add(EventFactory.createEvent(
+	    		if (calloutData.getCalloutType().equals("MRD"))
+	    			// set up a Prepayment behavior call out event for this model at this time 
+	    			calloutEvents.add(EventFactory.createEvent(
 	    	    		LocalDateTime.parse(calloutData.getTime()),
 	    	    		EventType.PP,
 	    	    		model.getAs("currency"),
 	    	    		new POF_PP_rf2(calloutData.getModelID()),
 	    	    		new STF_PP_rf2(calloutData.getModelID()),
-	    	    		model.getAs("BusinessDayConvention"),
-	    	  	        model.getAs("ContractID")
-	    	    		));    			
+	    	    		model.getAs("businessDayConvention"),
+	    	  	        model.getAs("contractID")
+	    	    		));   
+	    		else if (calloutData.getCalloutType().equals("AFD")) {
+		    		// set up an Absolute Funds-checked Delta callout event for this model at this time 
+		    	    calloutEvents.add(EventFactory.createEvent(
+		    	    	LocalDateTime.parse(calloutData.getTime()),
+		    	    	EventType.AFD,
+		    	    	model.getAs("currency"),
+		    	    	new POF_AFD_rf2(calloutData.getModelID()),
+		    	    	new STF_AFD_rf2(calloutData.getModelID()),
+		    	    	model.getAs("businessDayConvention"),
+		    	  	    model.getAs("contractID")
+		    	    	));
+		    	    System.out.println("****fnp1039 created AFD callout time= " + LocalDateTime.parse(calloutData.getTime()));
+	    		}
+	    		else 
+	    			System.out.println("****fnp104  invalid calloutType = " + calloutData.getCalloutType()) ;
+	    		
 	    	}
-	    	schedule.addAll(prepaymentEvents);
+	    	schedule.addAll(calloutEvents);
 	        // apply schedule to contract
 	        schedule = ContractType.apply(schedule, model, observer);
 
