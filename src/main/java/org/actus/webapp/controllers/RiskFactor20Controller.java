@@ -136,10 +136,10 @@ public class RiskFactor20Controller {
 
 	    private List<Event> computeEvents(ContractModel model, RiskFactorModelProvider observer) {
 	        // define projection end-time
-	        LocalDateTime to = model.getAs("TerminationDate");
-	        if(to == null) to = model.getAs("MaturityDate");
-	        if(to == null) to = model.getAs("AmortizationDate");
-	        if(to == null) to = model.getAs("SettlementDate");
+	        LocalDateTime to = model.getAs("terminationDate");
+	        if(to == null) to = model.getAs("maturityDate");
+	        if(to == null) to = model.getAs("amortizationDate");
+	        if(to == null) to = model.getAs("settlementDate");
 	        if(to == null) to = LocalDateTime.now().plusYears(5);
 
 	        // compute actus schedule
@@ -234,7 +234,7 @@ public class RiskFactor20Controller {
 	                                    Set<LocalDateTime> monitoringTimes, Map<String,Object> attributes) {
 
 	        // define simulation horizon if not provided
-	        if(to == null) to = model.getAs("MaturityDate");
+	        if(to == null) to = model.getAs("maturityDate");
 	        if(to == null) to = LocalDateTime.now().plusYears(5);
 
 	        // compute actus schedule
@@ -246,11 +246,11 @@ public class RiskFactor20Controller {
 	            schedule.addAll(EventFactory.createEvents(
 	                        monitoringTimes,
 	                        EventType.AD,
-	                        model.getAs("Currency"),
+	                        model.getAs("currency"),
 	                        new POF_AD_PAM(),
 	                        new STF_AD_PAM(),
-	                        model.getAs("BusinessDayConvention"),
-	                        model.getAs("ContractID")
+	                        model.getAs("businessDayConvention"),
+	                        model.getAs("contractID")
 	                ));
 	        }
 
