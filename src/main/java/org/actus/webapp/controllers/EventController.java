@@ -116,10 +116,10 @@ public class EventController {
 
     private List<Event> computeEvents(ContractModel model, RiskFactorModelProvider observer) {
         // define projection end-time
-        LocalDateTime to = model.getAs("TerminationDate");
-        if(to == null) to = model.getAs("MaturityDate");
-        if(to == null) to = model.getAs("AmortizationDate");
-        if(to == null) to = model.getAs("SettlementDate");
+        LocalDateTime to = model.getAs("terminationDate");
+        if(to == null) to = model.getAs("maturityDate");
+        if(to == null) to = model.getAs("amortizationDate");
+        if(to == null) to = model.getAs("settlementDate");
         if(to == null) to = LocalDateTime.now().plusYears(5);
 
         // compute actus schedule
